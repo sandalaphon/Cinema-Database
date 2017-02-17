@@ -8,12 +8,37 @@ def initialize( options )
 end
 
 def save()
+  x=get_film.price
+  y=get_customer.funds
+  cu=get_customer
+  cu.funds=y-x
+  cu.update
+  
   sql = "INSERT INTO tickets (film_id, customer_id) 
   VALUES
   (#{film_id}, #{customer_id}) 
   RETURNING id;"
   @id= SqlRunner.run(sql)[0]['id'].to_i
+  
   end
+
+
+  def get_customer
+    sql= "SELECT * FROM customers WHERE customers.id=#{@customer_id}
+    "
+    result= SqlRunner.run(sql)
+    return Customer.new(result[0])
+
+  end
+
+    def get_film
+      sql = "SELECT * FROM films WHERE films.id = #{@film_id};"
+      result = SqlRunner.run(sql)
+      return Film.new(result[0])
+    end
+
+
+ 
 
   def self.all
     sql = "SELECT * FROM tickets"
