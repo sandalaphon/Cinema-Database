@@ -41,7 +41,10 @@ def self.get_many(sql)
       return results.map{|customer| Customer.new(customer)}
 end
 
-
+def delete
+  sql = "DELETE FROM customers WHERE id = #{@id}"
+  SqlRunner.run(sql)
+end
 
 
 
