@@ -41,5 +41,15 @@ def self.get_many(sql)
     SqlRunner.run(sql)
   end
 
+  def customers
+    sql= "SELECT customers.* FROM customers INNER JOIN tickets ON tickets.customer_id = customers.id WHERE tickets.film_id = #{@id};"
+      return Customer.get_many(sql)
+  end
+
+  def self.get_many(sql)
+    results = SqlRunner.run(sql)
+    return results.map {|film| Film.new(film)}
+  end
+
 
 end
