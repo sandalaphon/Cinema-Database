@@ -64,5 +64,14 @@ def self.get_many(sql)
    return result
   end
 
+def pop_time
+  #The following works fine but prefer the .max method due to better readability
+  # showtimes = self.tickets.map{|ticket| ticket.show_time}.sort
+  # number_most_pop = showtimes.count(showtimes[0])
+  showtimes = self.tickets.map{|ticket| ticket.show_time}
+  number_most_pop = showtimes.count(showtimes.max)
+  puts "The most popular showtime of #{self.title} is the #{showtimes[0]} showing where #{number_most_pop} tickets have been sold"
+
+end
 
 end

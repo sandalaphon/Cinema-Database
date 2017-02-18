@@ -1,10 +1,11 @@
 class Ticket
-
+  attr_accessor :show_time
 attr_reader :id, :film_id, :customer_id
 def initialize( options )
 @id = options['id'].to_i if options['id']
 @film_id = options['film_id'].to_i if options['film_id']
 @customer_id = options['customer_id'].to_i if options['customer_id']
+@show_time = options['show_time']
 end
 
 def save()
@@ -14,9 +15,9 @@ def save()
   cu.funds=y-x
   cu.update
   
-  sql = "INSERT INTO tickets (film_id, customer_id) 
+  sql = "INSERT INTO tickets (film_id, customer_id, show_time) 
   VALUES
-  (#{film_id}, #{customer_id}) 
+  (#{@film_id}, #{@customer_id}, #{@show_time}) 
   RETURNING id;"
   @id= SqlRunner.run(sql)[0]['id'].to_i
   

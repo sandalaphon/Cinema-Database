@@ -60,6 +60,17 @@ def tickets
   return Ticket.get_many(sql)
 end
 
+def bookings
+  film_names = self.tickets.map{|ticket| ticket.get_film.title}
+  magic_hash = Hash.new(0)
+  film_names.each {|filmname| magic_hash[filmname] +=1 }
+  if film_names.length != 0
+  puts "#{self.name} has "
+  magic_hash.each{|filmname, no_tickets| puts "#{no_tickets} tickets to see #{filmname}"}
+else puts "#{self.name} has no current bookings"
+  end
+  end
+
 
 
 end
