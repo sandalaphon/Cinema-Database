@@ -43,12 +43,25 @@ def self.get_many(sql)
 
   def customers
     sql= "SELECT customers.* FROM customers INNER JOIN tickets ON tickets.customer_id = customers.id WHERE tickets.film_id = #{@id};"
-      return Customer.get_many(sql)
+      results= Customer.get_many(sql)
+      number_customers=results.length
+      customer_names=[]
+      results.each{|customer| customer_names+=[customer.name]}
+
+      puts "The following #{number_customers} are going to see #{self.title}: #{customer_names.join(", ")}\n"
+      return results
   end
 
   def self.get_many(sql)
     results = SqlRunner.run(sql)
     return results.map {|film| Film.new(film)}
+  end
+
+  def tickets
+    sql = "SELECT * FROM tickets WHERE tickets.film_id = #{@id}"
+   result= Ticket.get_many(sql)
+   puts "#{result.length} tickets have been sold to #{self.title}"
+   return result
   end
 
 

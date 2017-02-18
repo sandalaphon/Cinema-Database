@@ -48,7 +48,11 @@ end
 
 def films
   sql = "SELECT films.* FROM films INNER JOIN tickets ON tickets.film_id = films.id WHERE tickets.customer_id = #{@id}"
-  Film.get_many(sql)
+  results = Film.get_many(sql)
+  film_names=[]
+  results.each {|film| film_names+=[film.title]}
+  puts "#{self.name} has bought #{results.length} tickets. To see #{film_names.join(", ")}\n"
+  return results
   end
 
 def tickets
