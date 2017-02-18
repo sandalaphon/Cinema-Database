@@ -14,8 +14,8 @@ def save()
   ('#{@name}', #{@funds})
   RETURNING *;"
   result = SqlRunner.run(sql)
-   b=result[0]
-  @id = b['id'].to_i
+   
+  @id = result[0]['id'].to_i
 end
 
 def self.delete_all
@@ -51,6 +51,10 @@ def films
   Film.get_many(sql)
   end
 
+def tickets
+  sql = "SELECT * FROM tickets WHERE customer_id = #{@id}"
+  return Ticket.get_many(sql)
+end
 
 
 

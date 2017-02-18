@@ -37,7 +37,10 @@ def save()
       return Film.new(result[0])
     end
 
-
+    def self.get_many(sql)
+      tickets = SqlRunner.run(sql)
+      return tickets.map {|ticket| Ticket.new(ticket)}
+    end
  
 
   def self.all
@@ -65,4 +68,13 @@ def delete
   SqlRunner.run(sql)
 end
 
+def film
+  sql = "SELECT * FROM films WHERE films.id = #{@film_id}"
+  return Film.get_many(sql)
+  end
+
+  def customer
+    sql = "SELECT * FROM customers WHERE customers.id = #{customer_id}"
+    return Customer.get_many(sql)
+  end
 end
